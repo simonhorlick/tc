@@ -15,35 +15,18 @@ using namespace std;
 class XorBoardDivTwo {
 public:
     int theMax(vector <string> b) {
+        int n = b.size();
+        int m = b[0].size();
         int ans = 0;
-        int n=b.size();
-        int m=b[0].size();
-        int ones = 0;
-        for(int i=0; i<n; i++) {
+        for(int i=0; i<n; i++){
             for(int j=0; j<m; j++) {
-                if(b[i][j] == '1') ones++;
-            }
-        }
-        for(int i=0; i<n; i++) {
-            for(int j=0; j<m; j++) {
-                int d = 0;
-                //across
-                for(int k=0; k<m; k++) {
-                    if(k==j) continue;
-                    if(b[i][k] == '0')
-                        d++;
-                    else
-                        d--;
-                }
+                int x = 0;
                 for(int k=0; k<n; k++) {
-                    if(k==i) continue;
-                    if(b[k][j] == '0')
-                        d++;
-                    else
-                        d--;
+                    for(int l=0; l<m; l++) {
+                        x += ((b[k][l] == '1') ^ (i == k) ^ (j == l));
+                    }
                 }
-                ans = max(ans, ones+d);
-                //cout << "(" << i << "," << j << ") => " << (ones+d) << endl;
+                ans = max(ans, x);
             }
         }
         return ans;
